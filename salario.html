@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Salário - OrganizaVida</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>💰 Meu Salário</h1>
+    <p>Controle seus ganhos mensais</p>
+
+    <form class="form-rotina" onsubmit="salvarSalario(); return false;">
+        <input type="number" id="salario" placeholder="Salário mensal (R$)" required>
+        <input type="number" id="rendaExtra" placeholder="Renda extra (R$)">
+        <button type="submit">Salvar</button>
+    </form>
+
+    <a href="home.html" class="voltar">⬅ Voltar</a>
+</div>
+
+<script src="salario.js"></script>
+</body>
+</html>

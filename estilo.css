@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #0a39a5;
+    padding: 20px;
+}
+
+.container h1{
+    color: #ffffff;
+}
+.container p{
+    color: #ffffff;
+}
+.container {
+    background-color: #000000;
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+    min-height: 500px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    height: auto;
+}
+
+.form-rotina {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-rotina input {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-rotina button {
+    padding: 10px;
+    background: #9d16c6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-rotina button:hover {
+    background: #900e95;
+}
+
+.lista {
+    list-style: none;
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.lista li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+}
+
+.btn-small {
+    background: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.voltar {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+.voltar:hover {
+    text-decoration: underline;
+}
+.btn-link {
+    padding: 12px;
+    background: #9d16c6;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.btn-link:hover {
+    background: #900e95;
+}
+.ok {
+    background: #e8f5e9;
+    border-left: 6px solid #4CAF50;
+}
+
+.alerta {
+    background: #fff8e1;
+    border-left: 6px solid #FBC02D;
+}
+
+.perigo {
+    background: #ffebee;
+    border-left: 6px solid #e53935;
+}

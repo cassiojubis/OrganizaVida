@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumo</title>
+    <link rel="stylesheet" href="resumo.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>📊 Resumo Geral</h1>
+    <p>Visão geral da sua rotina e finanças</p>
+
+    <!-- Financeiro -->
+    <ul class="lista">
+        <li>💵 Salário: <strong id="salario">R$ 0</strong></li>
+        <li>➕ Renda extra: <strong id="rendaExtra">R$ 0</strong></li>
+        <li>📉 Total de gastos: <strong id="gastos">R$ 0</strong></li>
+        <li>✅ Saldo disponível: <strong id="saldo">R$ 0</strong></li>
+    </ul>
+
+    <!-- Contas -->
+    <ul class="lista">
+        <li><strong>🧾 Contas</strong></li>
+        <li>Total de contas: <strong id="totalContas">0</strong></li>
+        <li>✔ Pagas: <strong id="contasPagas">0</strong></li>
+        <li>⏳ Pendentes: <strong id="contasPendentes">0</strong></li>
+    </ul>
+
+    <!-- Contas pendentes -->
+    <ul class="lista" id="listaPendentes">
+        <li><strong>📋 Contas Pendentes</strong></li>
+    </ul>
+
+    <!-- Alertas -->
+    <ul class="lista" id="alertas">
+        <li><strong>⚠ Próximas do vencimento</strong></li>
+    </ul>
+
+    <!-- Rotina -->
+    <ul class="lista">
+        <li>📅 Tarefas do dia: <strong id="totalTarefas">0</strong></li>
+        <li>✔ Concluídas: <strong id="tarefasOk">0</strong></li>
+        <li>⏳ Pendentes: <strong id="tarefasPendentes">0</strong></li>
+    </ul>
+
+    <a href="home.html" class="voltar">⬅ Voltar</a>
+</div>
+
+<script src="resumo.js"></script>
+</body>
+</html>

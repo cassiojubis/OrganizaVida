@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Contas</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>🧾 Contas a Pagar</h1>
+    <p>Organize seus compromissos financeiros</p>
+
+   <form class="form-rotina" onsubmit="adicionarConta(); return false;">
+    <input type="text" id="nomeConta" placeholder="Nome da conta" required>
+    <input type="number" id="valorConta" placeholder="Valor (R$)" required>
+    <input type="date" id="vencimentoConta" required>
+    <button type="submit">Adicionar</button>
+</form>
+
+
+    <ul class="lista" id="listaContas"></ul>
+
+    <a href="home.html" class="voltar">⬅ Voltar</a>
+</div>
+<script src="contas.js"></script>
+</body>
+</html>
