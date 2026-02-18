@@ -32,6 +32,27 @@ OrganizaVida é uma aplicação web para organizar rotina diária e controlar fi
 
 ## Deploy para acesso de outra cidade (internet)
 
+### Subir em outra máquina sem Render (mais fácil)
+
+Se o Render estiver dando trabalho, use Docker na outra máquina (VPS/servidor).
+
+1. Instale Docker na máquina de destino.
+2. Faça clone do repositório.
+3. Rode os comandos abaixo:
+
+```bash
+docker build -t organizavida .
+docker run -d --name organizavida -p 3000:3000 -v organizavida_data:/app/data organizavida
+```
+
+4. Acesse no navegador:
+
+```text
+http://IP_DA_MAQUINA:3000/home.html
+```
+
+> Se quiser acesso público (internet), abra/encaminhe a porta 3000 no firewall/roteador ou coloque um proxy com domínio.
+
 Este projeto já está pronto para deploy e acesso público por URL.
 
 ### Opção recomendada: Render
@@ -74,5 +95,7 @@ Este projeto já está pronto para deploy e acesso público por URL.
 - `server.js`: servidor API + arquivos estáticos
 - `data/db.json`: persistência local para ambiente de desenvolvimento
 - `render.yaml`: configuração de deploy no Render
+- `Dockerfile`: empacotamento para rodar em qualquer máquina com Docker
+- `.dockerignore`: arquivos ignorados na build Docker
 - `Procfile`: compatibilidade com plataformas PaaS
 - `*.html`, `*.css`, `*.js`: frontend
