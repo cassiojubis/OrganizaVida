@@ -1,22 +1,11 @@
-let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+let tarefas = [];
 
 const lista = document.getElementById("listaTarefas");
 
-function salvarTarefas() {
-    localStorage.setItem("tarefas", JSON.stringify(tarefas));
-}
-
-// hora atual HH:MM
 function horaAtual() {
     return new Date().toTimeString().slice(0, 5);
 }
 
-/*
- ORDENAR:
- - Pendentes primeiro
- - Pendentes por horário
- - Concluídas por último
-*/
 function ordenarTarefas() {
     return [...tarefas].sort((a, b) => {
         if (a.concluida !== b.concluida) {
@@ -32,7 +21,7 @@ function renderizarTarefas() {
     const agora = horaAtual();
     const tarefasOrdenadas = ordenarTarefas();
 
-    tarefasOrdenadas.forEach(tarefa => {
+    tarefasOrdenadas.forEach((tarefa) => {
         const li = document.createElement("li");
 
         const atrasada = !tarefa.concluida && tarefa.hora < agora;
@@ -62,44 +51,46 @@ function renderizarTarefas() {
 
         lista.appendChild(li);
     });
-
-    salvarTarefas();
 }
 
-function adicionarTarefa() {
+async function carregarTarefas() {
+    const resposta = await fetch('/api/tarefas');
+    tarefas = await resposta.json();
+    renderizarTarefas();
+}
+
+async function adicionarTarefa() {
     const nome = document.getElementById("tarefa");
     const hora = document.getElementById("hora");
 
     if (!nome.value || !hora.value) return;
 
-    tarefas.push({
-        id: Date.now(),
-        nome: nome.value,
-        hora: hora.value,
-        concluida: false
+    await fetch('/api/tarefas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome: nome.value, hora: hora.value })
     });
 
     nome.value = "";
     hora.value = "";
 
-    renderizarTarefas();
+    await carregarTarefas();
 }
 
-function toggleTarefa(id) {
-    const tarefa = tarefas.find(t => t.id === id);
-    if (tarefa) {
-        tarefa.concluida = !tarefa.concluida;
-        renderizarTarefas();
-    }
+async function toggleTarefa(id) {
+    await fetch(`/api/tarefas/${id}/toggle`, { method: 'PATCH' });
+    await carregarTarefas();
 }
 
-function excluirTarefa(id) {
-    tarefas = tarefas.filter(t => t.id !== id);
-    renderizarTarefas();
+async function excluirTarefa(id) {
+    await fetch(`/api/tarefas/${id}`, { method: 'DELETE' });
+    await carregarTarefas();
 }
 
-// atualiza atraso automaticamente
 setInterval(renderizarTarefas, 60000);
 
-// carregar ao abrir
-renderizarTarefas();
+window.adicionarTarefa = adicionarTarefa;
+window.toggleTarefa = toggleTarefa;
+window.excluirTarefa = excluirTarefa;
+
+carregarTarefas();
