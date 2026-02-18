@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: organizavida
+    runtime: node
+    plan: free
+    buildCommand: "echo Build finalizado"
+    startCommand: "npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATA_DIR
+        value: /var/data/organizavida
+    disk:
+      name: organizavida-data
+      mountPath: /var/data
+      sizeGB: 1

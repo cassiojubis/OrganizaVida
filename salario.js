@@ -1,9 +1,9 @@
-let dadosSalario = JSON.parse(localStorage.getItem("salario")) || {
+let dadosSalario = {
     salario: 0,
     rendaExtra: 0
 };
 
-function salvarSalario() {
+async function salvarSalario() {
     const salarioInput = document.getElementById("salario");
     const rendaExtraInput = document.getElementById("rendaExtra");
 
@@ -15,17 +15,24 @@ function salvarSalario() {
         return;
     }
 
-    dadosSalario = { salario, rendaExtra };
+    const resposta = await fetch('/api/salario', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ salario, rendaExtra })
+    });
 
-    localStorage.setItem("salario", JSON.stringify(dadosSalario));
+    dadosSalario = await resposta.json();
 
     alert("💾 Salário salvo com sucesso!");
 }
 
-function carregarSalario() {
+async function carregarSalario() {
+    const resposta = await fetch('/api/salario');
+    dadosSalario = await resposta.json();
+
     document.getElementById("salario").value = dadosSalario.salario || "";
     document.getElementById("rendaExtra").value = dadosSalario.rendaExtra || "";
 }
 
-// carregar ao abrir
+window.salvarSalario = salvarSalario;
 carregarSalario();
