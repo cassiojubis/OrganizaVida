@@ -69,6 +69,36 @@ Este projeto já está pronto para deploy e acesso público por URL.
 
 > **Importante (plano free):** o Render Free não usa disco persistente neste projeto, então o `DATA_DIR` está configurado para `/tmp/organizavida`. Isso permite rodar sem erro no plano grátis, mas os dados podem ser perdidos após reinício/redeploy.
 
+
+### Se aparecer o erro `disks are not supported in free tier services`
+
+No Render Blueprint, confirme estes pontos antes de clicar em **Apply**:
+
+1. **Branch**: `main` (ou a branch onde está o arquivo atualizado).
+2. **Blueprint Path**: `render.yaml` (com ponto, exatamente assim).
+3. O YAML **não** pode ter bloco `disk:` no plano free.
+
+Trecho esperado do arquivo:
+
+```yaml
+services:
+  - type: web
+    name: organizavida
+    runtime: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATA_DIR
+        value: /tmp/organizavida
+```
+
+Se ainda mostrar `disk`, normalmente é porque a branch no GitHub ainda está com versão antiga. Nesse caso, faça `git push origin main` e recrie o Blueprint.
+
 ### Variáveis de ambiente
 
 - `PORT`: porta do servidor (fornecida automaticamente no deploy).
