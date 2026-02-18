@@ -1,22 +1,11 @@
-let contas = JSON.parse(localStorage.getItem("contas")) || [];
+let contas = [];
 
 const lista = document.getElementById("listaContas");
 
-// data de hoje (YYYY-MM-DD)
 function hoje() {
     return new Date().toISOString().split("T")[0];
 }
 
-function salvarContas() {
-    localStorage.setItem("contas", JSON.stringify(contas));
-}
-
-/*
- ORDENAR:
- - Pendentes primeiro
- - Mais próximas do vencimento
- - Pagas por último
-*/
 function ordenarContas() {
     return [...contas].sort((a, b) => {
         if (a.paga !== b.paga) {
@@ -32,7 +21,7 @@ function renderizarContas() {
     const hojeData = hoje();
     const contasOrdenadas = ordenarContas();
 
-    contasOrdenadas.forEach(conta => {
+    contasOrdenadas.forEach((conta) => {
         const li = document.createElement("li");
 
         const vencida = !conta.paga && conta.vencimento < hojeData;
@@ -64,47 +53,52 @@ function renderizarContas() {
 
         lista.appendChild(li);
     });
-
-    salvarContas();
 }
 
-function adicionarConta() {
+async function carregarContas() {
+    const resposta = await fetch('/api/contas');
+    contas = await resposta.json();
+    renderizarContas();
+}
+
+async function adicionarConta() {
     const nome = document.getElementById("nomeConta");
     const valor = document.getElementById("valorConta");
     const vencimento = document.getElementById("vencimentoConta");
 
     if (!nome.value || !valor.value || !vencimento.value) return;
 
-    contas.push({
-        id: Date.now(),
-        nome: nome.value,
-        valor: Number(valor.value),
-        vencimento: vencimento.value,
-        paga: false
+    await fetch('/api/contas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            nome: nome.value,
+            valor: Number(valor.value),
+            vencimento: vencimento.value
+        })
     });
 
     nome.value = "";
     valor.value = "";
     vencimento.value = "";
 
-    renderizarContas();
+    await carregarContas();
 }
 
-function toggleConta(id) {
-    const conta = contas.find(c => c.id === id);
-    if (conta) {
-        conta.paga = !conta.paga;
-        renderizarContas();
-    }
+async function toggleConta(id) {
+    await fetch(`/api/contas/${id}/toggle`, { method: 'PATCH' });
+    await carregarContas();
 }
 
-function excluirConta(id) {
-    contas = contas.filter(c => c.id !== id);
-    renderizarContas();
+async function excluirConta(id) {
+    await fetch(`/api/contas/${id}`, { method: 'DELETE' });
+    await carregarContas();
 }
 
-// atualiza automaticamente vencidas
 setInterval(renderizarContas, 60000);
 
-// carregar ao abrir
-renderizarContas();
+window.adicionarConta = adicionarConta;
+window.toggleConta = toggleConta;
+window.excluirConta = excluirConta;
+
+carregarContas();

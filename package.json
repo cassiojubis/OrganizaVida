@@ -1,0 +1,11 @@
+{
+  "name": "organizavida",
+  "version": "1.0.0",
+  "description": "OrganizaVida com backend Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "license": "MIT"
+}
